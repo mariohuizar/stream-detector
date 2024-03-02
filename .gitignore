@@ -1,0 +1,32 @@
+*.jar
+*.class
+*.DS_Store*
+.bloop
+# sbt specific
+.cache/
+.history/
+.lib/
+dist/*
+target/
+lib_managed/
+src_managed/
+project/boot/
+project/plugins/project/
+project/plugins/target/
+project/target/
+
+# Scala-IDE specific
+.scala_dependencies
+.worksheet
+.idea
+.idea_modules
+/tmp
+.bsp/
+
+#Ivy cache
+.ivy2/
+
+project/metals.sbt
+project/project
+.metals
+.vscode
