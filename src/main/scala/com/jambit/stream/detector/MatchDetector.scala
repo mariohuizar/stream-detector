@@ -1,7 +1,7 @@
 package com.jambit.stream.detector
 
-import com.jambit.stream.detector.MatchTypes.{MatchEvent, MatchState, Message}
-import org.apache.flink.api.common.state.{ValueState, ValueStateDescriptor}
+import com.jambit.stream.detector.MatchTypes.{ MatchEvent, MatchState, Message }
+import org.apache.flink.api.common.state.{ ValueState, ValueStateDescriptor }
 import org.apache.flink.configuration.Configuration
 import org.apache.flink.streaming.api.functions.KeyedProcessFunction
 import org.apache.flink.util.Collector
@@ -21,9 +21,9 @@ class MatchDetector extends KeyedProcessFunction[String, Message, MatchEvent] {
   }
 
   override def processElement(
-                               message: Message,
-                               ctx: KeyedProcessFunction[String, Message, MatchEvent]#Context,
-                               out: Collector[MatchEvent]
+      message: Message,
+      ctx: KeyedProcessFunction[String, Message, MatchEvent]#Context,
+      out: Collector[MatchEvent]
   ): Unit = {
 
     val maybeMatchState = Option(storedMatchState.value())
@@ -36,8 +36,8 @@ class MatchDetector extends KeyedProcessFunction[String, Message, MatchEvent] {
       case (None, "start") =>
         val matchState = new MatchState(
           startExperience = message.messageValue,
-          startTime    = message.timeOfReceipt,
-          maxCoins     = 0
+          startTime       = message.timeOfReceipt,
+          maxCoins        = 0
         )
         storedMatchState.update(matchState)
         log.debug(
@@ -48,7 +48,7 @@ class MatchDetector extends KeyedProcessFunction[String, Message, MatchEvent] {
           new MatchEvent(
             userId     = ctx.getCurrentKey,
             experience = message.messageValue - matchState.startExperience,
-            maxCoins = 0
+            maxCoins   = 0
           )
         log.debug(s"Detected match event ${matchEvent.toString}")
         out.collect(matchEvent)

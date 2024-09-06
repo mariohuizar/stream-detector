@@ -1,7 +1,7 @@
 package com.jambit.stream.detector
 
 import com.jambit.stream.detector.MatchTypes.Message
-import org.apache.flink.api.common.eventtime.{SerializableTimestampAssigner, WatermarkStrategy}
+import org.apache.flink.api.common.eventtime.{ SerializableTimestampAssigner, WatermarkStrategy }
 import org.apache.flink.cep.CEP
 import org.apache.flink.cep.functions.PatternProcessFunction.Context
 import org.apache.flink.cep.pattern.Pattern
@@ -16,7 +16,6 @@ import org.slf4j.LoggerFactory
 import java.time.Duration
 
 object MatchDetectorApp {
-
   private val log = LoggerFactory.getLogger(this.getClass)
 
   private val executionConfiguration = new Configuration()
