@@ -1,11 +1,10 @@
 package com.jambit.stream.detector
 
-import com.jambit.stream.detector.MatchTypes.{MatchEvent, MatchState, Message}
+import com.jambit.stream.detector.MatchTypes.{ MatchEvent, MatchState, Message }
 import org.apache.flink.types.PojoTestUtils.assertSerializedAsPojoWithoutKryo
 import org.scalatest.Inside
 import org.scalatest.matchers.should.Matchers
 import org.scalatest.wordspec.AnyWordSpec
-
 
 class MatchTypesSpec extends AnyWordSpec with Matchers with Inside {
 

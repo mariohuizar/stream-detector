@@ -14,7 +14,7 @@ class MessageDeserializer extends DeserializationSchema[Message] {
     log.debug(s"Parsing message $string")
     val tokens = string.split(",")
     new Message(
-      userId          = tokens(0),
+      userId        = tokens(0),
       messageType   = tokens(1),
       messageValue  = tokens(2).toInt,
       timeOfReceipt = tokens(3).toLong
