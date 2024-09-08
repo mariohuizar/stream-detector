@@ -1,12 +1,12 @@
-lazy val root = (project in file(".")).
-  settings(
-    inThisBuild(List(
+lazy val root = (project in file(".")).settings(
+  inThisBuild(
+    List(
       organization := "com.jambit.stream.detector",
       scalaVersion := "2.13.14"
-    )),
-    name := "stream-detector"
-  )
-
+    )
+  ),
+  name := "stream-detector"
+)
 
 ThisBuild / assemblyMergeStrategy := {
   case PathList("META-INF", _*) => MergeStrategy.discard
@@ -16,17 +16,17 @@ ThisBuild / assemblyMergeStrategy := {
 }
 
 libraryDependencies ++= Seq(
-      library.flinkClients,
-      library.flinkStreamingJava,
-      library.flinkKafka,
-      library.flinkCep,
-      library.flinkTestUtils,
-      library.scalaTest,
-      library.mockito,
-      library.log4jCore,
-      library.slf4log4j2,
-      library.slf4j
-    )
+  library.flinkClients,
+  library.flinkStreamingJava,
+  library.flinkKafka,
+  library.flinkCep,
+  library.flinkTestUtils,
+  library.scalaTest,
+  library.mockito,
+  library.log4jCore,
+  library.slf4log4j2,
+  library.slf4j
+)
 
 lazy val library = new {
   val version = new {
@@ -51,7 +51,10 @@ lazy val library = new {
   val slf4j      = "org.slf4j"                % "slf4j-api"         % version.slf4j
 
   val flinkTestUtils =
-    "org.apache.flink" % "flink-test-utils" % version.flink % "test, it" exclude ("org.apache.logging.log4j", "log4j-slf4j-impl")
+    "org.apache.flink" % "flink-test-utils" % version.flink % "test, it" exclude (
+      "org.apache.logging.log4j",
+      "log4j-slf4j-impl"
+    )
   val scalaTest = "org.scalatest"     %% "scalatest"   % version.scalaTest % "test, it"
   val mockito   = "org.scalatestplus" %% "mockito-4-6" % version.mockito   % "test"
 }
