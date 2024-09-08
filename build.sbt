@@ -1,12 +1,12 @@
-lazy val root = (project in file(".")).
-  settings(
-    inThisBuild(List(
+lazy val root = (project in file(".")).settings(
+  inThisBuild(
+    List(
       organization := "com.jambit.stream.detector",
       scalaVersion := "2.13.14"
-    )),
-    name := "stream-detector"
-  )
-
+    )
+  ),
+  name := "stream-detector"
+)
 
 ThisBuild / assemblyMergeStrategy := {
   case PathList("META-INF", _*) => MergeStrategy.discard
@@ -16,17 +16,17 @@ ThisBuild / assemblyMergeStrategy := {
 }
 
 libraryDependencies ++= Seq(
-      library.flinkClients,
-      library.flinkStreamingJava,
-      library.flinkKafka,
-      library.flinkCep,
-      library.flinkTestUtils,
-      library.scalaTest,
-      library.mockito,
-      library.log4jCore,
-      library.slf4log4j2,
-      library.slf4j
-    )
+  library.flinkClients,
+  library.flinkStreamingJava,
+  library.flinkKafka,
+  library.flinkCep,
+  library.flinkTestUtils,
+  library.scalaTest,
+  library.mockito,
+  library.log4jCore,
+  library.slf4log4j2,
+  library.slf4j
+)
 
 lazy val library = new {
   val version = new {
@@ -34,7 +34,7 @@ lazy val library = new {
     val flink     = "1.17.0"
     val log4j     = "2.20.0"
     val slf4j     = "2.0.7"
-    val scalaTest = "3.2.15"
+    val scalaTest = "3.2.19"
     val mockito   = "3.2.15.0"
   }
 
