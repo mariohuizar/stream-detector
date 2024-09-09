@@ -1,0 +1,26 @@
+name: Create PR from `develop` to `main`
+
+on:
+  schedule:
+    - cron: "0 0 * * MON"
+
+jobs:
+  create-develop-pr:
+    runs-on: ubuntu-latest
+    name: Create PR from `develop` to `main`
+    steps:
+      - name: Create Pull Request
+        run: |
+          develop=$(gh api /repos/$GITHUB_REPOSITORY/commits/refs/heads/develop -q '.sha')
+          main=$(gh api /repos/$GITHUB_REPOSITORY/commits/refs/heads/main -q '.sha')
+
+          if [[ $develop != $main ]]; then
+              gh api /repos/$GITHUB_REPOSITORY/pulls \
+                -f title="Scala Steward Updates" \
+                -f base=main \
+                -f head=develop
+          else
+              echo "There are no updates"
+          fi
+        env:
+          GITHUB_TOKEN: ${{ github.token }}

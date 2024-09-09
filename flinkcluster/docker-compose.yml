@@ -1,7 +1,7 @@
 version: "1.0"
 services:
   flink-jobmanager:
-    build: .
+    build: flink:1.19.1-java17
     container_name: flink-jobmanager
     ports:
       - "8081:8081"
@@ -17,7 +17,7 @@ services:
         queryable-state.enable: true
 
   flink-taskmanager-a:
-    build: .
+    build: flink:1.19.1-java17
     container_name: flink-taskmanager-a
     ports:
       - "9069:9069"
@@ -36,7 +36,7 @@ services:
         queryable-state.enable: true
 
   flink-taskmanager-b:
-    build: .
+    build: flink:1.19.1-java17
     container_name: flink-taskmanager-b
     ports:
       - "9169:9069"
