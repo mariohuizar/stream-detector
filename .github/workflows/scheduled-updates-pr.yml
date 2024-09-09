@@ -31,6 +31,8 @@ jobs:
 
           echo "::set-output name=develop_sha::$develop_sha"
           echo "::set-output name=main_sha::$main_sha"
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
       # Create a pull request if develop is ahead of main
       - name: Create Pull Request (if necessary)
