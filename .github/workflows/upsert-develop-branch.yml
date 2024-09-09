@@ -3,30 +3,35 @@ name: Upsert `develop` branch
 on:
   push:
     branches: main
+  workflow_dispatch: # This allows manual triggering from the GitHub UI
 
 jobs:
-  upsert-develop-branch:
+  rebase:
     runs-on: ubuntu-latest
-    name: Create `develop` branch or rebase it to latest `main`
-    steps:
-      - name: Create `develop` branch (if it does not exists)
-        env:
-          GITHUB_TOKEN: ${{ github.token }}
-        run: |
-          gh api --silent \
-              /repos/${{ github.repository }}/git/refs \
-              -f ref="refs/heads/develop" \
-              -f sha="${{ github.sha}}" ||
-              echo '`develop` branch already exists on ${{ github.repository }}'
-      - name: Checkout develop branch
-        uses: actions/checkout@v2
-        with:
-          ref: develop
-          fetch-depth: 0
 
-      - name: Rebase `develop` branch to latest `origin/main`
+    steps:
+      # Checkout the repository
+      - name: Checkout repository
+        uses: actions/checkout@v3
+        with:
+          fetch-depth: 0 # Fetch all history so we can perform rebase
+
+      # Set up Git user
+      - name: Set up Git
         run: |
-          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git config user.name "github-actions[bot]"
+          git config --global user.name "github-actions[bot]"
+          git config --global user.email "github-actions[bot]@users.noreply.github.com"
+
+      # Rebase develop branch onto main
+      - name: Rebase develop onto main
+        run: |
+          git checkout develop
+          git fetch origin
           git rebase origin/main
-          git push -f -u origin develop
+
+      # Push changes back to develop branch after the rebase
+      - name: Push rebased changes
+        run: |
+          git push --force-with-lease origin develop
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
