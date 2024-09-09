@@ -13,7 +13,7 @@ jobs:
     steps:
       # Checkout the repository (this can be useful for future steps)
       - name: Checkout repository
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
         with:
           fetch-depth: 1
 
@@ -29,8 +29,9 @@ jobs:
           echo "Latest develop commit SHA: $develop_sha"
           echo "Latest main commit SHA: $main_sha"
 
-          echo "::set-output name=develop_sha::$develop_sha"
-          echo "::set-output name=main_sha::$main_sha"
+          # Set the output using the new method with GITHUB_OUTPUT
+          echo "develop_sha=$develop_sha" >> $GITHUB_OUTPUT
+          echo "main_sha=$main_sha" >> $GITHUB_OUTPUT
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
