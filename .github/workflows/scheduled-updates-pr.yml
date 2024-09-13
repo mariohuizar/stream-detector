@@ -48,7 +48,7 @@ jobs:
               echo "Develop is ahead of main. Checking for existing PR..."
 
               # Check if a PR already exists
-              existing_pr=$(gh api --silent /repos/$GITHUB_REPOSITORY/pulls \
+              existing_pr=$(gh api /repos/$GITHUB_REPOSITORY/pulls \
                 -f head=develop \
                 -f base=main -q '.[] | select(.head.ref=="develop" and .base.ref=="main") | .url')
 
