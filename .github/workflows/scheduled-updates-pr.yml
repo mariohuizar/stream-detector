@@ -21,6 +21,12 @@ jobs:
         with:
           fetch-depth: 1
 
+      # Set up GitHub CLI
+      - name: Set up GitHub CLI
+        uses: actions/setup-gh@v3
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+
       # Fetch the latest commit SHAs for develop and main branches
       - name: Fetch branch SHAs
         id: fetch-commits
