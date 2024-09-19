@@ -10,6 +10,7 @@ lazy val root = (project in file(".")).settings(
 
 ThisBuild / assemblyMergeStrategy := {
   case PathList("META-INF", _*) => MergeStrategy.discard
+  case "module-info.class" => MergeStrategy.discard
   case x =>
     val defaultStrategy = (ThisBuild / assemblyMergeStrategy).value
     defaultStrategy(x)
@@ -31,7 +32,7 @@ libraryDependencies ++= Seq(
 lazy val library = new {
   val version = new {
     val scala               = "2.13.14"
-    val flink               = "1.19.1"
+    val flink               = "1.19.1" // keep in-sync with docker-compose.yml
     val flinkKakfaConnector = "3.2.0-1.19"
     val log4j               = "2.24.0"
     val slf4j               = "2.0.16"
@@ -52,10 +53,10 @@ lazy val library = new {
   val slf4j      = "org.slf4j"                % "slf4j-api"         % version.slf4j
 
   val flinkTestUtils =
-    "org.apache.flink" % "flink-test-utils" % version.flink % "test, it" exclude (
+    "org.apache.flink" % "flink-test-utils" % version.flink % "test" exclude (
       "org.apache.logging.log4j",
       "log4j-slf4j-impl"
     )
-  val scalaTest = "org.scalatest"     %% "scalatest"   % version.scalaTest % "test, it"
+  val scalaTest = "org.scalatest"     %% "scalatest"   % version.scalaTest % "test"
   val mockito   = "org.scalatestplus" %% "mockito-4-6" % version.mockito   % "test"
 }
