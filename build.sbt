@@ -2,7 +2,7 @@ lazy val root = (project in file(".")).settings(
   inThisBuild(
     List(
       organization := "com.jambit.stream.detector",
-      scalaVersion := "2.13.14"
+      scalaVersion := "2.13.15"
     )
   ),
   name := "stream-detector"
@@ -31,7 +31,7 @@ libraryDependencies ++= Seq(
 
 lazy val library = new {
   val version = new {
-    val scala               = "2.13.14"
+    val scala               = "2.13.15"
     val flink               = "1.19.1" // keep in-sync with docker-compose.yml
     val flinkKakfaConnector = "3.2.0-1.19"
     val log4j               = "2.24.0"
