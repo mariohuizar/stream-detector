@@ -16,7 +16,6 @@ class MatchDetector extends KeyedProcessFunction[String, Message, MatchEvent] {
   override def open(parameters: Configuration): Unit = {
     val storedMatchStateDescriptor =
       new ValueStateDescriptor[MatchState]("storedMatchState", classOf[MatchState])
-    storedMatchStateDescriptor.setQueryable("matchState")
     storedMatchState = getRuntimeContext.getState(storedMatchStateDescriptor)
   }
 
