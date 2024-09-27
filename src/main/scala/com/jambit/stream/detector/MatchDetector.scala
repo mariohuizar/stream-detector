@@ -36,8 +36,7 @@ class MatchDetector extends KeyedProcessFunction[String, Message, MatchEvent] {
       case (None, "start") =>
         val matchState = new MatchState(
           startExperience = message.messageValue,
-          startTime       = message.timeOfReceipt,
-          maxCoins        = 0
+          startTime       = message.timeOfReceipt
         )
         storedMatchState.update(matchState)
         log.debug(
@@ -47,8 +46,7 @@ class MatchDetector extends KeyedProcessFunction[String, Message, MatchEvent] {
         val matchEvent =
           new MatchEvent(
             userId     = ctx.getCurrentKey,
-            experience = message.messageValue - matchState.startExperience,
-            maxCoins   = 0
+            experienceWon = message.messageValue - matchState.startExperience
           )
         log.debug(s"Detected match event ${matchEvent.toString}")
         out.collect(matchEvent)

@@ -11,13 +11,10 @@ import org.apache.flink.connector.kafka.source.enumerator.initializer.OffsetsIni
 import org.apache.flink.streaming.api.datastream.DataStream
 import org.apache.flink.streaming.api.environment.StreamExecutionEnvironment
 import org.apache.flink.util.Collector
-import org.slf4j.LoggerFactory
 
 import java.time.Duration
 
 object MatchDetectorApp {
-  private val log = LoggerFactory.getLogger(this.getClass)
-
   private val executionConfiguration = new Configuration()
 
   private val env = StreamExecutionEnvironment.getExecutionEnvironment(executionConfiguration)

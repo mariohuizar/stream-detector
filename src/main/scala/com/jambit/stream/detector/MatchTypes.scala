@@ -14,26 +14,23 @@ object MatchTypes {
 
   class MatchState(
       var startExperience: Int,
-      var startTime: Long,
-      var maxCoins: Int
+      var startTime: Long
   ) {
-    def this() = this(-1, -1, -1)
+    def this() = this(-1, -1)
 
     override def toString: String = s"MatchState(" +
-      s"startMileage=${startExperience.toString}, " +
+      s"startExperience=${startExperience.toString}, " +
       s"startTime=${startTime.toString}, " +
-      s"maxCoins=${maxCoins.toString}" +
       s")"
   }
 
-  class MatchEvent(var userId: String, var experience: Int, var maxCoins: Int) {
-    def this() = this("", -1, -1)
+  class MatchEvent(var userId: String, var experienceWon: Int) {
+    def this() = this("", -1)
 
     override def toString: String =
       s"MatchEvent(" +
         s"userId=$userId, " +
-        s"experience=${experience.toString}, " +
-        s"maxCoins=${maxCoins.toString}" +
+        s"experienceWon=${experienceWon.toString}" +
         s")"
   }
 }

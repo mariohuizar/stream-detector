@@ -35,8 +35,7 @@ class MatchDetectorSpec extends AnyWordSpec with Matchers with BeforeAndAfter {
       harness.extractOutputValues().size() shouldBe 1
       val detectedMatch = harness.extractOutputValues().get(0)
       detectedMatch.userId shouldBe "4711"
-      detectedMatch.experience shouldBe 11
-      detectedMatch.maxCoins shouldBe 0
+      detectedMatch.experienceWon shouldBe 11
     }
   }
 }
