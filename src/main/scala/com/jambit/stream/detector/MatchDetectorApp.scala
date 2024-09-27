@@ -37,7 +37,7 @@ object MatchDetectorApp {
       override def extractTimestamp(element: Message, recordTimestamp: Long): Long =
         element.timeOfReceipt
     })
-    // exclude sources form watermarking which do not receive messages for more than 5s
+    // exclude sources from watermarking which do not receive messages for more than 5s
     .withIdleness(Duration.ofSeconds(5))
 
   private val eventStream: DataStream[Message] = env

@@ -1,7 +1,7 @@
 package com.jambit.stream.detector
 
 object MatchTypes {
-  // define types according to https://nightlies.apache.org/flink/flink-docs-release-1.17/docs/dev/datastream/fault-tolerance/serialization/types_serialization/#pojos
+  // define types according to https://nightlies.apache.org/flink/flink-docs-master/docs/dev/datastream/fault-tolerance/serialization/types_serialization/#data-types--serialization
 
   class Message(
       var userId: String,
