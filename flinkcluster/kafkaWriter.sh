@@ -1,6 +1,6 @@
 #!/bin/bash
 
-# Script to produce user experience messages to Kafka in a loop
+# Script to produce user experienceWon messages to Kafka in a loop
 
 DOCKER=${DOCKER:-docker}
 SLEEP_INTERVAL=1
