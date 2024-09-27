@@ -13,8 +13,8 @@ They represent if a specific user started or ended a gaming session and the curr
 
 The application task is to generate an event when the user id generates a matching pair i.e.
 ```
-123, start, 0, 1 # User 123 started a gaming session with 0 experience at timestamp 0
-123, end, 5, 2   # User 123 ended a gaming session with 5 experience at timestamp 0
+123, start, 0, 1 # User 123 started a gaming session with 0 experience at timestamp 1
+123, end, 5, 2   # User 123 ended a gaming session with 5 experience at timestamp 2
 ```
 
 Generates a MatchEvent
