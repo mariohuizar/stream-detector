@@ -44,7 +44,7 @@ class MatchDetector extends KeyedProcessFunction[String, Message, MatchEvent] {
       case (Some(matchState), "end") =>
         val matchEvent =
           new MatchEvent(
-            userId     = ctx.getCurrentKey,
+            userId        = ctx.getCurrentKey,
             experienceWon = message.messageValue - matchState.startExperience
           )
         log.debug(s"Detected match event ${matchEvent.toString}")
