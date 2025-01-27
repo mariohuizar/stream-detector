@@ -2,7 +2,7 @@ lazy val root = (project in file(".")).settings(
   inThisBuild(
     List(
       organization := "com.jambit.stream.detector",
-      scalaVersion := "2.13.14"
+      scalaVersion := "2.13.16"
     )
   ),
   name := "stream-detector"
