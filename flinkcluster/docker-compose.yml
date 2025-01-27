@@ -55,7 +55,7 @@ services:
         queryable-state.enable: true
 
   zoo-a:
-    image: confluentinc/cp-zookeeper:7.3.2
+    image: confluentinc/cp-zookeeper:7.8.0
     hostname: zoo-a
     container_name: zoo-a
     ports:
@@ -66,7 +66,7 @@ services:
       ZOOKEEPER_SERVERS: zoo-a:2888:3888
 
   kafka-a:
-    image: confluentinc/cp-kafka:7.3.2
+    image: confluentinc/cp-kafka:7.8.0
     hostname: kafka-a
     container_name: kafka-a
     ports:
