@@ -1,16 +1,14 @@
 package com.jambit.stream.detector
 
-import com.jambit.stream.detector.MatchTypes.Message
-import org.apache.flink.api.common.eventtime.{ SerializableTimestampAssigner, WatermarkStrategy }
-import org.apache.flink.cep.CEP
-import org.apache.flink.cep.functions.PatternProcessFunction.Context
+import com.jambit.stream.detector.MatchTypes.{MatchEvent, Message}
+import org.apache.flink.api.common.eventtime.{SerializableTimestampAssigner, WatermarkStrategy}
 import org.apache.flink.cep.pattern.Pattern
+import org.apache.flink.cep.{CEP, PatternStream}
 import org.apache.flink.configuration.Configuration
 import org.apache.flink.connector.kafka.source.KafkaSource
 import org.apache.flink.connector.kafka.source.enumerator.initializer.OffsetsInitializer
-import org.apache.flink.streaming.api.datastream.DataStream
+import org.apache.flink.streaming.api.datastream.{DataStream, KeyedStream}
 import org.apache.flink.streaming.api.environment.StreamExecutionEnvironment
-import org.apache.flink.util.Collector
 
 import java.time.Duration
 
@@ -44,32 +42,30 @@ object MatchDetectorApp {
     .fromSource(kafkaSource, watermarkStrategy, "Kafka Source")
     .uid("kafka-source-id")
 
-  def detect(): Unit = {
-    val anyMessage = Pattern.begin[Message]("message")
+  // 1 ) Define a pattern: start -> end
+  val startEndPattern: Pattern[Message, Message] = Pattern
+    .begin[Message]("start")
+    .where((value, _) => value.messageType == "start")
+    .followedBy("end")
+    .where((value, _) => value.messageType == "end")
 
-    val orderedStream = CEP
-      .pattern(eventStream, anyMessage)
-      .process {
-        (
-            pattern: java.util.Map[String, java.util.List[Message]],
-            _: Context,
-            out: Collector[Message]
-        ) =>
-          out.collect(pattern.get("message").get(0))
-      }
-      .uid("cep-operator-id")
+  val keyedStream: KeyedStream[Message, String] = eventStream
+    .keyBy(_.userId)
 
-    val allMatchEventsPerUserId = orderedStream
-      .keyBy((m: Message) => m.userId)
-      .process(new MatchDetector)
-      .uid("keyed-process-function-id")
+  val patternStream: PatternStream[Message] = CEP.pattern(keyedStream, startEndPattern)
 
-    allMatchEventsPerUserId
-      .print()
-      .uid("print-sink-id")
+  val matchEvents: DataStream[MatchEvent] =
+    patternStream.select { map =>
+      val startMsg = map.get("start").get(0)
+      val endMsg   = map.get("end").get(0)
+      new MatchEvent(
+        userId        = startMsg.userId,
+        experienceWon = endMsg.messageValue - startMsg.messageValue
+      )
+    }
 
-    env.execute()
-  }
+  matchEvents.print().uid("print-sink-id")
+  def detect(): Unit = env.execute()
 
   def main(args: Array[String]): Unit =
     detect()
